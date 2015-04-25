@@ -1,11 +1,13 @@
 package com.growlspace.growlspace;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dexafree.materialList.cards.SmallImageCard;
 import com.dexafree.materialList.view.MaterialListView;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -25,6 +27,20 @@ public class FeedFragment extends Fragment {
         mListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.attachToRecyclerView(mListView);
+        populateList();
         return rootView;
+    }
+
+    private void populateList() {
+        SmallImageCard card;
+        Context context = getActivity().getApplicationContext();
+        for (int i = 1; i < 11; i++) {
+            card = new SmallImageCard(context);
+            card.setDescription("Hello, for the " + i + " time.");
+            card.setTitle("Greeting #" + i);
+            card.setDrawable(R.drawable.ic_launcher);
+
+            mListView.add(card);
+        }
     }
 }

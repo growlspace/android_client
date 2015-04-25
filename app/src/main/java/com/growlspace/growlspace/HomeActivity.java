@@ -15,8 +15,14 @@ public class HomeActivity extends AppCompatActivity {
                     .add(R.id.container, new FeedFragment())
                     .commit();
         }
+        initActionBar();
+    }
+
+    private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
     }
 
 }

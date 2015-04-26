@@ -51,6 +51,7 @@ public class FeedFragment extends Fragment {
         welcomeCard.setButtonText("Okay");
         welcomeCard.setBackgroundColor(getResources().getColor(R.color.primary));
         welcomeCard.setDescriptionColor(getResources().getColor(R.color.md_white_1000));
+        welcomeCard.setDismissible(true);
         mListView.add(welcomeCard);
 
         for (int i = 1; i < 11; i++) {

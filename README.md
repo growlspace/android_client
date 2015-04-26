@@ -2,7 +2,7 @@
 Android app client for the GrowlSpace social network.
 
 Uses the following libraries:
-- [AdvancedMaterialDrawer](https://github.com/madcyph3r/AdvancedMaterialDrawer)
+- [MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
 - [MaterialLoadingProgressBar](https://github.com/lsjwzh/MaterialLoadingProgressBar)
 - [RippleEffect](https://github.com/traex/RippleEffect)
 - [SystemBarTint](https://github.com/jgilfelt/SystemBarTint)

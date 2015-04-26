@@ -5,4 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_compose_post">Compose</string>
     <string name="post">Post</string>
+    <string name="sound_pref">Auto-Play Growls</string>
+    <string name="sound_pref_summary">Automatically play sounds as you scroll through your feed.</string>
 </resources>

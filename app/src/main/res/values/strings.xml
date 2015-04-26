@@ -7,4 +7,7 @@
     <string name="post">Post</string>
     <string name="sound_pref">Auto-Play Growls</string>
     <string name="sound_pref_summary">Automatically play sounds as you scroll through your feed.</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

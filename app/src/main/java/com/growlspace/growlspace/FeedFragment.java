@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dexafree.materialList.cards.SmallImageCard;
+import com.dexafree.materialList.cards.BigImageCard;
+import com.dexafree.materialList.cards.WelcomeCard;
 import com.dexafree.materialList.view.MaterialListView;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -32,14 +33,22 @@ public class FeedFragment extends Fragment {
     }
 
     private void populateList() {
-        SmallImageCard card;
+        BigImageCard card;
         Context context = getActivity().getApplicationContext();
+
+        WelcomeCard welcomeCard = new WelcomeCard(context);
+        welcomeCard.setTitle("Welcome to GrowlSpace!");
+        welcomeCard.setSubtitle("The Sound Social Network");
+        welcomeCard.setDescription("Touch the floating action button below to create your first growl, or just scroll your feed.");
+        welcomeCard.setButtonText("Okay");
+        welcomeCard.setBackgroundColor(getResources().getColor(R.color.primary));
+        welcomeCard.setDescriptionColor(getResources().getColor(R.color.white));
+        mListView.add(welcomeCard);
+
         for (int i = 1; i < 11; i++) {
-            card = new SmallImageCard(context);
+            card = new BigImageCard(context);
             card.setDescription("Hello, for the " + i + " time.");
             card.setTitle("Greeting #" + i);
-            card.setDrawable(R.drawable.ic_launcher);
-
             mListView.add(card);
         }
     }

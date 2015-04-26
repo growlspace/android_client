@@ -1,6 +1,7 @@
 package com.growlspace.growlspace;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,7 +29,14 @@ public class FeedFragment extends Fragment {
         mListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.attachToRecyclerView(mListView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), ComposePostActivity.class));
+            }
+        });
         populateList();
+        fab.attachToRecyclerView(mListView);
         return rootView;
     }
 

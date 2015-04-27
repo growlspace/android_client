@@ -1,4 +1,4 @@
-package com.growlspace.growlspace.entity;
+package space.growl.android.entity;
 
 import java.io.Serializable;
 

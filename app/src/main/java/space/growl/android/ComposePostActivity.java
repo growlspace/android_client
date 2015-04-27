@@ -1,4 +1,4 @@
-package com.growlspace.growlspace;
+package space.growl.android;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.growlspace.growlspace.entity.Post;
-import com.growlspace.growlspace.media.AudioRecorder;
+import space.growl.android.entity.Post;
+import space.growl.android.media.AudioRecorder;
 
 import java.util.UUID;
 

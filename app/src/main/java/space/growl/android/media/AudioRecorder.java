@@ -1,7 +1,6 @@
-package com.growlspace.growlspace.media;
+package space.growl.android.media;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.util.Log;

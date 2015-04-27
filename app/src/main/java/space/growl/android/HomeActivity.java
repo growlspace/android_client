@@ -1,14 +1,18 @@
-package com.growlspace.growlspace;
+package space.growl.android;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.io.File;
 
@@ -64,8 +68,27 @@ public class HomeActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.feed),
-                        new SecondaryDrawerItem().withName(R.string.action_settings)
+                        new PrimaryDrawerItem().withName(R.string.profile)
                 )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+                        switch (i) {
+                            case 0:
+                                Log.d(LOG_TAG, "Position = " + i);
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.container, new FeedFragment())
+                                        .commit();
+                                break;
+                            case 1:
+                                Log.d(LOG_TAG, "Position = " + i);
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.container, new ProfileFragment())
+                                        .commit();
+                                break;
+                        }
+                    }
+                })
                 .build();
     }
 

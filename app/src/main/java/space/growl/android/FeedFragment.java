@@ -1,4 +1,4 @@
-package com.growlspace.growlspace;
+package space.growl.android;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +17,7 @@ import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.cards.WelcomeCard;
 import com.dexafree.materialList.view.MaterialListView;
 import com.google.gson.JsonObject;
-import com.growlspace.growlspace.entity.Post;
+import space.growl.android.entity.Post;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.melnykov.fab.FloatingActionButton;

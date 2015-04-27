@@ -1,4 +1,4 @@
-package com.growlspace.growlspace;
+package space.growl.android;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

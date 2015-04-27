@@ -8,4 +8,4 @@ Uses the following libraries:
 - [SystemBarTint](https://github.com/jgilfelt/SystemBarTint)
 - [makovkastar/FloatingActionButton](https://github.com/makovkastar/FloatingActionButton)
 - [MaterialList](https://github.com/dexafree/MaterialList)
-- [VolleyPlus](https://github.com/DWorkS/VolleyPlus)
+- [Ion](https://github.com/koush/ion)

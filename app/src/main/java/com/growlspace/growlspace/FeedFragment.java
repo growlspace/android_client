@@ -1,22 +1,30 @@
 package com.growlspace.growlspace;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dexafree.materialList.cards.BigImageCard;
 import com.dexafree.materialList.cards.WelcomeCard;
 import com.dexafree.materialList.view.MaterialListView;
+import com.google.gson.JsonObject;
+import com.growlspace.growlspace.entity.Post;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.melnykov.fab.FloatingActionButton;
 
 /**
  * Created by Nicholas on 4/25/2015.
  */
 public class FeedFragment extends Fragment {
+    private static final String LOG_TAG = "FeedFragment";
     private MaterialListView mListView;
 
     public FeedFragment() {
@@ -32,12 +40,40 @@ public class FeedFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), ComposePostActivity.class));
+                startActivityForResult(new Intent(v.getContext(), ComposePostActivity.class), 1);
             }
         });
         populateList();
         fab.attachToRecyclerView(mListView);
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                String audioFilePath = data.getStringExtra(Post.AUDIO_FILE_PATH);
+                String caption = data.getStringExtra(Post.CAPTION);
+
+                Post post = new Post(audioFilePath, caption);
+
+                Ion.with(this)
+                        .load("https://koush.clockworkmod.com/test/echo")
+                        .setJsonPojoBody(post)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                if (e != null) {
+                                    Log.e(LOG_TAG, e.toString());
+                                }
+                                Log.d(LOG_TAG, result.toString());
+                                Toast.makeText(getActivity(), "File uploaded successfully.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        }
     }
 
     private void populateList() {

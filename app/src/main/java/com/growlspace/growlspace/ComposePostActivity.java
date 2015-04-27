@@ -15,23 +15,18 @@ public class ComposePostActivity extends AppCompatActivity {
 
     AudioRecorder audioRecorder = null;
 
+    UUID currentPostID = UUID.randomUUID();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_post);
-        audioRecorder = new AudioRecorder(this, UUID.randomUUID().toString());
+        audioRecorder = new AudioRecorder(this, currentPostID.toString());
 
         OnClickListener clicker = new OnClickListener() {
-            boolean mStartRecording = true;
             @Override
             public void onClick(View v) {
-                audioRecorder.onRecord(mStartRecording);
-                if (mStartRecording) {
-                    audioRecorder.logDebug("Started recording");
-                } else {
-                    audioRecorder.logDebug("Stopped recording");
-                }
-                mStartRecording = !mStartRecording;
+                audioRecorder.onRecord(true);
             }
         };
 

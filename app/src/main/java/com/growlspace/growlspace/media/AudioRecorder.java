@@ -3,6 +3,7 @@ package com.growlspace.growlspace.media;
 import android.content.Context;
 import android.media.MediaRecorder;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 public class AudioRecorder {
     private static final String LOG_TAG = "AudioRecorder";
 
+    private Context mContext = null;
     private String mFileName = null;
 
     private MediaRecorder mRecorder = null;
@@ -19,6 +21,7 @@ public class AudioRecorder {
     public AudioRecorder(Context context, String pFilename) {
         mFileName = context.getCacheDir().getAbsolutePath();
         mFileName += "/" + pFilename + ".3gp";
+        mContext = context;
         Log.d(LOG_TAG, "Saving to " + mFileName);
     }
 
@@ -38,6 +41,7 @@ public class AudioRecorder {
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
         mRecorder.setMaxDuration(1000);
+        mRecorder.setOnInfoListener(new CallbackListener());
 
         try {
             mRecorder.prepare();
@@ -62,7 +66,16 @@ public class AudioRecorder {
         }
     }
 
-    public void logDebug (String msg) {
-        Log.d(LOG_TAG, msg);
+    private class CallbackListener implements MediaRecorder.OnInfoListener {
+
+        @Override
+        public void onInfo(MediaRecorder mr, int what, int extra) {
+            if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
+                onRecord(false);
+                Log.d(LOG_TAG, "Recording stopped, max duration reached");
+                Toast alert = Toast.makeText(mContext, "Recording complete!", Toast.LENGTH_SHORT);
+                alert.show();
+            }
+        }
     }
 }

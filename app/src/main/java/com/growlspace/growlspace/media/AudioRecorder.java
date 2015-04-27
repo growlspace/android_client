@@ -1,6 +1,7 @@
 package com.growlspace.growlspace.media;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.util.Log;
@@ -47,6 +48,7 @@ public class AudioRecorder {
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFileName);
+            mPlayer.setOnCompletionListener(new PlaybackCallbackListener());
             mPlayer.prepare();
             mPlayer.start();
         } catch (IOException e) {
@@ -67,7 +69,7 @@ public class AudioRecorder {
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
         mRecorder.setMaxDuration(1000);
-        mRecorder.setOnInfoListener(new CallbackListener());
+        mRecorder.setOnInfoListener(new RecordCallbackListener());
 
         try {
             mRecorder.prepare();
@@ -92,7 +94,7 @@ public class AudioRecorder {
         }
     }
 
-    private class CallbackListener implements MediaRecorder.OnInfoListener {
+    private class RecordCallbackListener implements MediaRecorder.OnInfoListener {
 
         @Override
         public void onInfo(MediaRecorder mr, int what, int extra) {
@@ -102,6 +104,15 @@ public class AudioRecorder {
                 Toast alert = Toast.makeText(mContext, "Recording complete!", Toast.LENGTH_SHORT);
                 alert.show();
             }
+        }
+    }
+
+    private class PlaybackCallbackListener implements MediaPlayer.OnCompletionListener {
+
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            mp.stop();
+            mp.reset();
         }
     }
 

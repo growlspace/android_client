@@ -1,9 +1,5 @@
 package space.growl.android.entity;
 
-import android.content.Context;
-
-import com.dexafree.materialList.cards.BasicButtonsCard;
-
 import java.io.Serializable;
 
 /**
@@ -17,6 +13,11 @@ public class Post implements Serializable {
     String caption;
     String imagePath;
     String audioPath;
+
+    public Post(String caption, String audioPath) {
+        this.caption = caption;
+        this.audioPath = audioPath;
+    }
 
     public Post(String id, User user, String caption, String audioPath) {
         this.id = id;

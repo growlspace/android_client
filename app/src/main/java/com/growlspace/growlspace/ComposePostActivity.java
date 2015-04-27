@@ -29,18 +29,28 @@ public class ComposePostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose_post);
         audioRecorder = new AudioRecorder(this, currentPostID.toString());
 
-        OnClickListener recordClicker = new OnClickListener() {
+        // set up record button
+        ImageButton recordButton = (ImageButton) findViewById(R.id.recordButton);
+        recordButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 audioRecorder.onRecord(true);
             }
-        };
+        });
 
-        ImageButton recordButton = (ImageButton) findViewById(R.id.recordButton);
-        recordButton.setOnClickListener(recordClicker);
+        // set up preview button
+        ImageButton previewButton = (ImageButton) findViewById(R.id.previewButton);
+        previewButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                audioRecorder.onPlay(true);
+            }
+        });
 
+
+        // set up post submission button
         Button submitButton = (Button) findViewById(R.id.submitPostButton);
-        OnClickListener submitClicker = new OnClickListener() {
+        submitButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 String caption = ((EditText) findViewById(R.id.postBodyEditText)).getText().toString();
@@ -55,8 +65,7 @@ public class ComposePostActivity extends AppCompatActivity {
                 parentActivity.setResult(Activity.RESULT_OK, resultIntent);
                 parentActivity.finish();
             }
-        };
-        submitButton.setOnClickListener(submitClicker);
+        });
     }
 
     @Override

@@ -22,7 +22,8 @@
         <activity
             android:name=".ComposePostActivity"
             android:label="@string/title_activity_compose_post"
-            android:parentActivityName=".HomeActivity" >
+            android:parentActivityName=".HomeActivity"
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.growlspace.growlspace.HomeActivity" />

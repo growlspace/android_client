@@ -1,56 +1,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.growlspace.growlspace.ComposePostActivity">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/record"
-        android:id="@+id/recordButton"
-        android:contentDescription="@string/record"
-        android:src="@drawable/ic_av_mic"
-        android:layout_above="@+id/postBodyEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="79dp"
-        android:elevation="4dp" />
 
     <EditText
+        android:id="@+id/postBodyEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:hint="@string/caption_hint"
-        android:id="@+id/postBodyEditText" />
+        android:importantForAccessibility="yes"
+        android:inputType="textShortMessage"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp" />
 
     <Button
+        android:id="@+id/submitPostButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/post"
-        android:id="@+id/submitPostButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/postBodyEditText"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="24dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
-        android:elevation="4dp" />
+        android:elevation="4dp"
+        android:text="@string/post" />
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/record_hint"
-        android:id="@+id/textView"
-        android:elevation="2dp"
-        android:layout_above="@+id/recordButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
-        android:gravity="center" />
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_above="@+id/postBodyEditText">
+
+        <ImageButton
+            android:id="@+id/recordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/record"
+            android:elevation="4dp"
+            android:src="@drawable/ic_av_mic"
+            android:text="@string/record" />
+
+        <ImageButton
+            android:id="@+id/previewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:src="@drawable/ic_av_play_circle_outline" />
+    </LinearLayout>
 
 </RelativeLayout>

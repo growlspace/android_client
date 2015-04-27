@@ -1,6 +1,7 @@
 package com.growlspace.growlspace.media;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ public class AudioRecorder {
     private String mFileName = null;
 
     private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer = null;
 
     public AudioRecorder(Context context, String pFilename) {
         mFileName = context.getCacheDir().getAbsolutePath();
@@ -31,6 +33,30 @@ public class AudioRecorder {
         } else {
             stopRecording();
         }
+    }
+
+    public void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void startPlaying() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(mFileName);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "prepare() failed");
+        }
+    }
+
+    private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
     }
 
 

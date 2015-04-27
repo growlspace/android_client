@@ -19,7 +19,7 @@ import java.util.UUID;
 public class ComposePostActivity extends AppCompatActivity {
     private static final String LOG_TAG = "ComposeActivity";
 
-    AudioRecorder audioRecorder = null;
+    private AudioRecorder audioRecorder = null;
 
     UUID currentPostID = UUID.randomUUID();
 

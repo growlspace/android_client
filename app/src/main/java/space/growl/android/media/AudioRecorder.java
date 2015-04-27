@@ -91,6 +91,10 @@ public class AudioRecorder {
             mRecorder.release();
             mRecorder = null;
         }
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 
     private class RecordCallbackListener implements MediaRecorder.OnInfoListener {

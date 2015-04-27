@@ -9,9 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.io.File;
@@ -58,14 +56,14 @@ public class HomeActivity extends AppCompatActivity {
                     .add(R.id.container, new FeedFragment())
                     .commit();
         }
-        AccountHeader.Result headerResult = new AccountHeader()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.abc_cab_background_top_material)
-                .build();
+//        AccountHeader.Result headerResult = new AccountHeader()
+//                .withActivity(this)
+//                .withHeaderBackground(R.drawable.abc_cab_background_top_material)
+//                .build();
         result = new Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withAccountHeader(headerResult)
+//                .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.feed),
                         new PrimaryDrawerItem().withName(R.string.profile)

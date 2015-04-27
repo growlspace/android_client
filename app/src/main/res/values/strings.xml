@@ -12,4 +12,6 @@
     <string name="caption_hint">Enter a caption</string>
     <string name="record_hint">Press the button to begin recording</string>
     <string name="profile">Profile</string>
+    <string name="like">Like</string>
+    <string name="play">Play</string>
 </resources>

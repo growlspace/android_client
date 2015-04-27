@@ -13,14 +13,21 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.dexafree.materialList.cards.BigImageCard;
+import com.dexafree.materialList.cards.BasicButtonsCard;
+import com.dexafree.materialList.cards.OnButtonPressListener;
 import com.dexafree.materialList.cards.WelcomeCard;
+import com.dexafree.materialList.model.Card;
 import com.dexafree.materialList.view.MaterialListView;
 import com.google.gson.JsonObject;
-import space.growl.android.entity.Post;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.melnykov.fab.FloatingActionButton;
+
+import java.util.ArrayList;
+
+import space.growl.android.entity.Post;
+import space.growl.android.media.AudioPlayer;
+import space.growl.android.media.AudioRecorder;
 
 /**
  * Created by Nicholas on 4/25/2015.
@@ -28,6 +35,8 @@ import com.melnykov.fab.FloatingActionButton;
 public class FeedFragment extends Fragment {
     private static final String LOG_TAG = "FeedFragment";
     private MaterialListView mListView;
+
+    private AudioPlayer mAudioPlayer = new AudioPlayer();
 
     public FeedFragment() {
     }
@@ -90,24 +99,54 @@ public class FeedFragment extends Fragment {
     }
 
     private void populateList() {
-        BigImageCard card;
+        BasicButtonsCard card;
         Context context = mListView.getContext();
 
         WelcomeCard welcomeCard = new WelcomeCard(context);
         welcomeCard.setTitle("Welcome to gr(_)wl");
         welcomeCard.setSubtitle("pronounced \"growl space\"");
         welcomeCard.setDescription("Touch the floating action button below to create your first growl, or just scroll your feed.");
-        welcomeCard.setButtonText("Okay");
+        welcomeCard.setButtonText("SWIPE TO DISMISS");
         welcomeCard.setBackgroundColor(getResources().getColor(R.color.primary));
         welcomeCard.setDescriptionColor(getResources().getColor(R.color.md_white_1000));
         welcomeCard.setDismissible(true);
+        welcomeCard.setOnButtonPressedListener(new OnButtonPressListener() {
+            @Override
+            public void onButtonPressedListener(View view, Card card) {
+                Log.d(LOG_TAG, "This is where I would dismiss the welcome card... IF I COULD");
+            }
+        });
         mListView.add(welcomeCard);
 
-        for (int i = 1; i < 11; i++) {
-            card = new BigImageCard(context);
-            card.setDescription("Hello, for the " + i + " time.");
-            card.setTitle("Greeting #" + i);
+        ArrayList<Post> posts = new ArrayList<>(); // gotta fill that with Ion
+
+        for (Post post : posts) {
+            card = CardFactory.PostToCard(post, context);
+            // LEFT
+            card.setOnLeftButtonPressedListener(new OnButtonPressListener() {
+                @Override
+                public void onButtonPressedListener(View view, Card card) {
+                    // send a server request to like things
+                    ((BasicButtonsCard) card).setLeftButtonTextColor(R.color.primary_dark);
+                }
+            });
+
+            // RIGHT
+            card.setOnRightButtonPressedListener(new AudioButtonListener(post.getAudioPath()));
             mListView.add(card);
+        }
+    }
+
+    private class AudioButtonListener implements OnButtonPressListener {
+        String audioPath;
+
+        private AudioButtonListener(String audioPath) {
+            this.audioPath = audioPath;
+        }
+
+        @Override
+        public void onButtonPressedListener(View view, Card card) {
+            mAudioPlayer.startPlaying(audioPath);
         }
     }
 }

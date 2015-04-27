@@ -14,7 +14,7 @@ public class Post implements Serializable {
     String imagePath;
     String audioPath;
 
-    public Post(String caption, String audioPath) {
+    public Post(String audioPath, String caption) {
         this.caption = caption;
         this.audioPath = audioPath;
     }
@@ -30,6 +30,9 @@ public class Post implements Serializable {
         return user.getName();
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getCaption() {
         return caption;

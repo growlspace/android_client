@@ -24,8 +24,11 @@ import com.koushikdutta.ion.Ion;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import space.growl.android.entity.Post;
+import space.growl.android.entity.User;
 import space.growl.android.media.AudioPlayer;
 import space.growl.android.media.AudioRecorder;
 
@@ -94,12 +97,13 @@ public class FeedFragment extends Fragment {
                                 Toast.makeText(getActivity(), "File uploaded successfully.", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                uglyHackToFillData(post);
             }
         }
     }
 
     private void populateList() {
-        BasicButtonsCard card;
         Context context = mListView.getContext();
 
         WelcomeCard welcomeCard = new WelcomeCard(context);
@@ -118,7 +122,19 @@ public class FeedFragment extends Fragment {
         });
         mListView.add(welcomeCard);
 
-        ArrayList<Post> posts = new ArrayList<>(); // gotta fill that with Ion
+    }
+
+    private void uglyHackToFillData(Post post) {
+        ArrayList<Post> postArrayList = new ArrayList<>();
+
+        post.setUser(new User("garbage", "testUser", "i like turtles", "/dev/null", new Date()));
+        postArrayList.add(post);
+
+        addPostsToList(postArrayList);
+    }
+    private void addPostsToList(List<Post> posts) {
+        Context context = mListView.getContext();
+        BasicButtonsCard card;
 
         for (Post post : posts) {
             card = CardFactory.PostToCard(post, context);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -53,12 +54,19 @@ public class ComposePostActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String caption = ((EditText) findViewById(R.id.postBodyEditText)).getText().toString();
                 String audioFilePath = audioRecorder.getFileName();
+                String caption = ((EditText) findViewById(R.id.postBodyEditText)).getText().toString();
 
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(Post.AUDIO_FILE_PATH, audioFilePath);
                 resultIntent.putExtra(Post.CAPTION, caption);
+
+                Bundle bundle = resultIntent.getExtras();
+                for (String key : bundle.keySet()) {
+                    Object value = bundle.get(key);
+                    Log.d(LOG_TAG, String.format("%s %s (%s)", key,
+                            value.toString(), value.getClass().getName()));
+                }
 
                 Activity parentActivity = (Activity) v.getContext();
 

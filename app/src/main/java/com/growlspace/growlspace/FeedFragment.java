@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.dexafree.materialList.cards.BigImageCard;
@@ -45,7 +47,15 @@ public class FeedFragment extends Fragment {
         });
         populateList();
         fab.attachToRecyclerView(mListView);
+
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -53,6 +63,7 @@ public class FeedFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
+                ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar);
                 String audioFilePath = data.getStringExtra(Post.AUDIO_FILE_PATH);
                 String caption = data.getStringExtra(Post.CAPTION);
 
@@ -60,6 +71,8 @@ public class FeedFragment extends Fragment {
 
                 Ion.with(this)
                         .load("https://koush.clockworkmod.com/test/echo")
+                        .setLogging(LOG_TAG, Log.DEBUG)
+                        .progressBar(progressBar)
                         .setJsonPojoBody(post)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {

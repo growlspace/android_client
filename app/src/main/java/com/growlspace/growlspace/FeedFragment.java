@@ -91,11 +91,11 @@ public class FeedFragment extends Fragment {
 
     private void populateList() {
         BigImageCard card;
-        Context context = getActivity().getApplicationContext();
+        Context context = mListView.getContext();
 
         WelcomeCard welcomeCard = new WelcomeCard(context);
-        welcomeCard.setTitle("Welcome to GrowlSpace!");
-        welcomeCard.setSubtitle("The Sound Social Network");
+        welcomeCard.setTitle("Welcome to gr(_)wl");
+        welcomeCard.setSubtitle("pronounced \"growl space\"");
         welcomeCard.setDescription("Touch the floating action button below to create your first growl, or just scroll your feed.");
         welcomeCard.setButtonText("Okay");
         welcomeCard.setBackgroundColor(getResources().getColor(R.color.primary));

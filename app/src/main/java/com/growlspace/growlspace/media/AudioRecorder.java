@@ -78,4 +78,8 @@ public class AudioRecorder {
             }
         }
     }
+
+    public String getFileName() {
+        return mFileName;
+    }
 }

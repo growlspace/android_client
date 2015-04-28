@@ -2,6 +2,7 @@ package space.growl.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -109,7 +110,7 @@ public class HomeActivity extends AppCompatActivity {
 
         AccountHeader.Result headerResult = new AccountHeader()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.abc_cab_background_top_material)
+                .withHeaderBackground(new ColorDrawable(getResources().getColor(R.color.primary)))
                 .addProfiles(
                         new ProfileDrawerItem().withName(currentUser.getName()).withEmail(currentUser.getEmail())
                 )

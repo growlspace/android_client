@@ -1,6 +1,7 @@
 package space.growl.android;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,9 +17,11 @@ import java.io.File;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String LOG_TAG = "HomeActivity";
+    public static final String PREFS_NAME = "GrowlSpacePreferences";
 
     Drawer.Result result;
     Toolbar toolbar;
+    SharedPreferences prefs;
 
     public static void trimCache(Context context) {
         try {
@@ -50,12 +53,37 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        initActionBar();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new FeedFragment())
                     .commit();
         }
+
+        initVars();
+    }
+
+    private void initVars() {
+        initPreferences();
+        initActionBar();
+        initDrawer();
+    }
+
+    private void initPreferences() {
+        prefs = getSharedPreferences(PREFS_NAME, 0);
+        boolean firstRun = prefs.getBoolean("firstRun", true);
+        if (firstRun) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstRun", false);
+            editor.commit();
+        }
+    }
+
+    private void initActionBar() {
+        toolbar = (Toolbar) findViewById(R.id.growl_toolbar);
+        setSupportActionBar(toolbar);
+    }
+    private void initDrawer() {
+
 //        AccountHeader.Result headerResult = new AccountHeader()
 //                .withActivity(this)
 //                .withHeaderBackground(R.drawable.abc_cab_background_top_material)
@@ -88,11 +116,6 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 })
                 .build();
-    }
-
-    private void initActionBar() {
-        toolbar = (Toolbar) findViewById(R.id.growl_toolbar);
-        setSupportActionBar(toolbar);
     }
 
     @Override

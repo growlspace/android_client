@@ -1,6 +1,7 @@
 package space.growl.android.entity;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -75,5 +76,20 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nUser: ");
+        builder.append(getUsername());
+        builder.append("\nEmail: ");
+        builder.append(getEmail());
+        builder.append("\nBio: ");
+        builder.append(getBio());
+        builder.append("\nBirthday: ");
+        builder.append(DateFormat.getDateInstance().format(getCreated()));
+        builder.append("\n");
+        return builder.toString();
     }
 }

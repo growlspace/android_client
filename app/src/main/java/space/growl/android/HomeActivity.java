@@ -17,6 +17,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.io.File;
+import java.util.Date;
 import java.util.UUID;
 
 import space.growl.android.entity.User;
@@ -89,7 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         currentUser = getUserFromPreferences(prefs);
     }
 
-    private User getUserFromPreferences(SharedPreferences prefs) {
+    public static User getUserFromPreferences(SharedPreferences prefs) {
+        // TODO change this all to a constructor rather than mutation
         User result = new User();
         if (!prefs.contains("currentUserId")) {
             return result;
@@ -98,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
         result.setUsername(prefs.getString("currentUserName", "error loading name"));
         result.setEmail(prefs.getString("currentUserEmail", "error loading email"));
         result.setBio(prefs.getString("currentUserBio", "error loading bio"));
-        Log.d(LOG_TAG, result.getName());
+        result.setCreated(new Date());
         return result;
     }
 

@@ -10,10 +10,15 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.io.File;
+import java.util.UUID;
+
+import space.growl.android.entity.User;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String LOG_TAG = "HomeActivity";
@@ -21,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Drawer.Result result;
     Toolbar toolbar;
+    User currentUser;
 
     public static void trimCache(Context context) {
         try {
@@ -73,7 +79,26 @@ public class HomeActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("firstRun", false);
             editor.apply();
+            // TODO remove mock code below
+            if (!prefs.contains("currentUserId")) {
+                editor.putString("currentUserId", UUID.randomUUID().toString());
+                editor.apply();
+            }
         }
+        currentUser = getUserFromPreferences(prefs);
+    }
+
+    private User getUserFromPreferences(SharedPreferences prefs) {
+        User result = new User();
+        if (!prefs.contains("currentUserId")) {
+            return result;
+        }
+        result.setId(prefs.getString("currentUserId", null));
+        result.setUsername(prefs.getString("currentUserName", "error loading name"));
+        result.setEmail(prefs.getString("currentUserEmail", "error loading email"));
+        result.setBio(prefs.getString("currentUserBio", "error loading bio"));
+        Log.d(LOG_TAG, result.getName());
+        return result;
     }
 
     private void initActionBar() {
@@ -82,14 +107,17 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void initDrawer() {
 
-//        AccountHeader.Result headerResult = new AccountHeader()
-//                .withActivity(this)
-//                .withHeaderBackground(R.drawable.abc_cab_background_top_material)
-//                .build();
+        AccountHeader.Result headerResult = new AccountHeader()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.abc_cab_background_top_material)
+                .addProfiles(
+                        new ProfileDrawerItem().withName(currentUser.getName()).withEmail(currentUser.getEmail())
+                )
+                .build();
         result = new Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
-//                .withAccountHeader(headerResult)
+                .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.feed),
                         new PrimaryDrawerItem().withName(R.string.profile)

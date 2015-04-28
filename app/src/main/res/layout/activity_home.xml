@@ -1,18 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/big_container"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/big_container"
     android:orientation="vertical"
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context=".HomeActivity" tools:ignore="MergeRootFrame">
 
     <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/my_awesome_toolbar"
-        android:layout_height="wrap_content"
+        android:id="@+id/growl_toolbar"
         android:layout_width="match_parent"
-        android:foreground="?android:windowContentOverlay"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp"/>
 
     <FrameLayout
         android:id="@+id/container"

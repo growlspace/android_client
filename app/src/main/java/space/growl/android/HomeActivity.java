@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initActionBar() {
-        toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.growl_toolbar);
         setSupportActionBar(toolbar);
     }
 

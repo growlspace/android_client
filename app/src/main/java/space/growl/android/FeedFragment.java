@@ -110,14 +110,14 @@ public class FeedFragment extends Fragment {
         welcomeCard.setTitle("Welcome to gr(_)wl");
         welcomeCard.setSubtitle("pronounced \"growl space\"");
         welcomeCard.setDescription("Touch the floating action button below to create your first growl, or just scroll your feed.");
-        welcomeCard.setButtonText("SWIPE TO DISMISS");
+        welcomeCard.setButtonText("OKAY");
         welcomeCard.setBackgroundColor(getResources().getColor(R.color.primary));
         welcomeCard.setDescriptionColor(getResources().getColor(R.color.md_white_1000));
         welcomeCard.setDismissible(true);
         welcomeCard.setOnButtonPressedListener(new OnButtonPressListener() {
             @Override
             public void onButtonPressedListener(View view, Card card) {
-                Log.d(LOG_TAG, "This is where I would dismiss the welcome card... IF I COULD");
+                mListView.remove(card);
             }
         });
         mListView.add(welcomeCard);

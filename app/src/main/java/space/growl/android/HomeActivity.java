@@ -21,7 +21,6 @@ public class HomeActivity extends AppCompatActivity {
 
     Drawer.Result result;
     Toolbar toolbar;
-    SharedPreferences prefs;
 
     public static void trimCache(Context context) {
         try {
@@ -58,7 +57,6 @@ public class HomeActivity extends AppCompatActivity {
                     .add(R.id.container, new FeedFragment())
                     .commit();
         }
-
         initVars();
     }
 
@@ -69,12 +67,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initPreferences() {
-        prefs = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
         boolean firstRun = prefs.getBoolean("firstRun", true);
         if (firstRun) {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("firstRun", false);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -122,6 +120,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
+            SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
+            editor.clear();
+            editor.commit();
             trimCache(this);
             // Toast.makeText(this,"onDestroy " ,Toast.LENGTH_LONG).show();
         } catch (Exception e) {
@@ -130,4 +131,5 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
 }

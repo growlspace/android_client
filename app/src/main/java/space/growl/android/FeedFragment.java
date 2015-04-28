@@ -3,6 +3,7 @@ package space.growl.android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,6 @@ import java.util.List;
 import space.growl.android.entity.Post;
 import space.growl.android.entity.User;
 import space.growl.android.media.AudioPlayer;
-import space.growl.android.media.AudioRecorder;
 
 /**
  * Created by Nicholas on 4/25/2015.
@@ -38,6 +38,7 @@ import space.growl.android.media.AudioRecorder;
 public class FeedFragment extends Fragment {
     private static final String LOG_TAG = "FeedFragment";
     private MaterialListView mListView;
+    private SharedPreferences prefs;
 
     private AudioPlayer mAudioPlayer = new AudioPlayer();
 
@@ -49,6 +50,9 @@ public class FeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
+
+        prefs = getActivity().getSharedPreferences(HomeActivity.PREFS_NAME, 0);
+
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.attachToRecyclerView(mListView);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +61,6 @@ public class FeedFragment extends Fragment {
                 startActivityForResult(new Intent(v.getContext(), ComposePostActivity.class), 1);
             }
         });
-        populateList();
         fab.attachToRecyclerView(mListView);
 
         return rootView;
@@ -68,6 +71,10 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        boolean welcomeCard = prefs.getBoolean("welcomeCard", true);
+        if (welcomeCard) {
+            addWelcomeCard();
+        }
     }
 
     @Override
@@ -103,7 +110,7 @@ public class FeedFragment extends Fragment {
         }
     }
 
-    private void populateList() {
+    private void addWelcomeCard() {
         Context context = mListView.getContext();
 
         WelcomeCard welcomeCard = new WelcomeCard(context);
@@ -118,6 +125,8 @@ public class FeedFragment extends Fragment {
             @Override
             public void onButtonPressedListener(View view, Card card) {
                 mListView.remove(card);
+                prefs.edit().putBoolean("welcomeCard", false).apply();
+
             }
         });
         mListView.add(welcomeCard);
@@ -143,7 +152,8 @@ public class FeedFragment extends Fragment {
                 @Override
                 public void onButtonPressedListener(View view, Card card) {
                     // send a server request to like things
-                    ((BasicButtonsCard) card).setLeftButtonTextColor(R.color.primary_dark);
+                    // this would do number of likes and also allow undos
+                    ((BasicButtonsCard) card).setLeftButtonTextColor(getResources().getColor(R.color.primary_dark));
                 }
             });
 

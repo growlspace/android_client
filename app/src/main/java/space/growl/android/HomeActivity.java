@@ -149,13 +149,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
+            // TODO remove debugging to clear everything every time
             SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
             editor.clear();
             editor.commit();
+            // end
+
             trimCache(this);
-            // Toast.makeText(this,"onDestroy " ,Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
